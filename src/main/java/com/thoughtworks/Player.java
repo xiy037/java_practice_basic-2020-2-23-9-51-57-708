@@ -5,11 +5,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Player {
-  private ArrayList<Integer> guessInput = new ArrayList<>();
+  private ArrayList<Integer> guessInput;
   private int answerLength;
-  private ArrayList<Integer> allRight = new ArrayList<>();
+  private ArrayList<Integer> allRight;
+  private ArrayList<Integer> onlyNumRight;
   private boolean win;
-  private int modCount;
 
   public ArrayList<Integer> getAllRight() {
     return allRight;
@@ -19,13 +19,12 @@ public class Player {
     return onlyNumRight;
   }
 
-  private ArrayList<Integer> onlyNumRight = new ArrayList<>();
-
   public ArrayList<Integer> getGuessInput() {
     return guessInput;
   }
 
   public void setGuessInput(String numStr) {
+    guessInput = new ArrayList<>();
     String[] numArr = numStr.split("");
     for (String s : numArr) {
       guessInput.add(Integer.parseInt(s));
@@ -34,11 +33,12 @@ public class Player {
 
   //只有全对的时候返回true，其它时候都是false；
   public boolean winGame(GuessTarget game) {
-    if (modCount == 0) {
       win = true;
       ArrayList<Integer> target = game.getAnswer();
       answerLength = target.size();
       if (isRightFormat()) {
+        onlyNumRight = new ArrayList<>();
+        allRight = new ArrayList<>();
         for (int i = 0; i < answerLength; i++) {
           boolean completeEqual = guessInput.get(i).equals(target.get(i));
           if (target.contains(guessInput.get(i)) && !completeEqual) {
@@ -54,13 +54,15 @@ public class Player {
         win = false;
         System.out.println("wrong input format");
       }
-      modCount++;
-    }
     return win;
   }
 
   private boolean isRightFormat() {
     Set<Integer> checkSet = new HashSet<>(guessInput);
     return checkSet.size() == answerLength;
+  }
+
+  public boolean isWinner() {
+    return win;
   }
 }

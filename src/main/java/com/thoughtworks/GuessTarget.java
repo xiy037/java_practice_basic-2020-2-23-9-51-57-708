@@ -2,6 +2,7 @@ package com.thoughtworks;
 
 import java.io.File;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Guess will get or produce 4
@@ -53,5 +54,12 @@ public class GuessTarget {
 
   public ArrayList<Integer> getAnswer() {
     return answer;
+  }
+
+  @Override
+  public String toString() {
+    String listString = answer.stream().map(Object::toString)
+            .collect(Collectors.joining(""));
+    return listString;
   }
 }
