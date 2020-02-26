@@ -1,5 +1,8 @@
 package com.thoughtworks;
 
 public interface printResult {
-  public void printResult();
+
+  public void instruct();
+
+  public void output();
 }
