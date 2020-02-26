@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class App {
   /**
-   *   GuessTarget provides the answer;
-   *   PlayerGuess provides methods to get input, compareInputWithTarget;
+   * GuessTarget provides the answer;
+   * PlayerGuess provides methods to get input, compareInputWithTarget;
    */
 
   private static final int GUESS_TIME = 6;
@@ -26,9 +26,15 @@ public class App {
       System.out.println("Your guess is " + num);
       player.setGuessInput(num);
       System.out.println(DIVIDER);
-      GameResult result = new GameResult(game1, player);
-      result.output();
-      result.instruct();
+      try {
+        GameResult result = new GameResult(game1, player);
+        result.output();
+        result.instruct();
+      } catch (WrongInputException e) {
+        System.out.println(e.getMessage());
+        i--;
+        continue;
+      }
       if (player.isWinner()) {
         hitTarget = true;
         break;

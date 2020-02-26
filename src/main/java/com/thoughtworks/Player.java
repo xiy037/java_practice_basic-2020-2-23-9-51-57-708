@@ -23,7 +23,7 @@ public class Player {
     return guessInput;
   }
 
-  public void setGuessInput(String numStr) {
+  public void setGuessInput(String numStr){
     guessInput = new ArrayList<>();
     String[] numArr = numStr.split("");
     for (String s : numArr) {
@@ -32,29 +32,28 @@ public class Player {
   }
 
   //只有全对的时候返回true，其它时候都是false；
-  public boolean winGame(GuessTarget game) {
-      win = true;
-      ArrayList<Integer> target = game.getAnswer();
-      answerLength = target.size();
-      if (isRightFormat()) {
-        onlyNumRight = new ArrayList<>();
-        allRight = new ArrayList<>();
-        for (int i = 0; i < answerLength; i++) {
-          boolean completeEqual = guessInput.get(i).equals(target.get(i));
-          if (target.contains(guessInput.get(i)) && !completeEqual) {
-            onlyNumRight.add(guessInput.get(i));
-          }
-          if (completeEqual) {
-            allRight.add(guessInput.get(i));
-          } else {
-            win = false;
-          }
+  public void checkGuessAgainstAnswer(GuessTarget game) throws WrongInputException {
+    win = true;
+    ArrayList<Integer> target = game.getAnswer();
+    answerLength = target.size();
+    allRight = new ArrayList<>();
+    onlyNumRight = new ArrayList<>();
+    if (isRightFormat()) {
+      for (int i = 0; i < answerLength; i++) {
+        boolean completeEqual = guessInput.get(i).equals(target.get(i));
+        if (target.contains(guessInput.get(i)) && !completeEqual) {
+          onlyNumRight.add(guessInput.get(i));
         }
-      } else {
-        win = false;
-        System.out.println("wrong input format");
+        if (completeEqual) {
+          allRight.add(guessInput.get(i));
+        } else {
+          win = false;
+        }
       }
-    return win;
+    } else {
+      throw new WrongInputException();
+    }
+
   }
 
   private boolean isRightFormat() {

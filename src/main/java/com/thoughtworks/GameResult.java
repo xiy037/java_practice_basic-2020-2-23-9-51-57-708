@@ -8,10 +8,10 @@ public class GameResult implements printResult {
   public ArrayList<Integer> countA;
   public ArrayList<Integer> countB;
 
-  public GameResult(GuessTarget t, Player p) {
+  public GameResult(GuessTarget t, Player p) throws WrongInputException {
     target = t;
     player = p;
-    player.winGame(target);
+    player.checkGuessAgainstAnswer(target);
     countA = player.getAllRight();
     countB = player.getOnlyNumRight();
   }
@@ -26,7 +26,7 @@ public class GameResult implements printResult {
   public void instruct() {
     String result = "";
     int sizeB = countB.size();
-    if (player.winGame(target)) {
+    if (player.isWinner()) {
       result = allCorrect();
     } else if (countA.size() == 0 && sizeB == 0) {
       result = allWrong();
@@ -68,6 +68,11 @@ public class GameResult implements printResult {
           str = str + countB.get(i) + ", ";
         }
         str += String.format("%d and %d wrong position", countB.get(sizeB - 2), countB.get(sizeB - 1));
+      } else if (sizeB == 1) {
+        if (sizeA > 0) {
+          str += ", ";
+        }
+        str += countB.get(0) + " wrong position";
       }
     }
     return str;
