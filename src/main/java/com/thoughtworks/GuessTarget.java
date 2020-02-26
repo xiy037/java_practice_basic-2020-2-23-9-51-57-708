@@ -6,12 +6,11 @@ import java.util.*;
 /**
  * Guess will get or produce 4
  */
-public class Guess {
-  public ArrayList<Integer> answer = new ArrayList<>();
-  private boolean isTarget = false;
+public class GuessTarget {
+  private ArrayList<Integer> answer = new ArrayList<>();
   private final int ANSWER_LENGTH = 4;
 
-  public Guess(String path) {
+  public GuessTarget(String path) {
     try (Scanner scanner = new Scanner(new File(path))) {
       while(scanner.hasNextInt()) {
         answer.add(scanner.nextInt());
@@ -27,8 +26,15 @@ public class Guess {
   }
 
   private boolean isCorrectFormat() {
+    String one = Integer.toString(answer.get(0));
+    String[] splited = one.split("");
+    ArrayList<Integer> splitedIntList = new ArrayList<>();
+    for (String s : splited) {
+      splitedIntList.add(Integer.parseInt(s));
+    }
+    answer = splitedIntList;
     Set<Integer> checkSet = new HashSet<>(answer);
-    return checkSet.size() == 4;
+    return checkSet.size() == ANSWER_LENGTH;
   }
 
 
@@ -42,8 +48,10 @@ public class Guess {
         i--;
       }
     }
-    answer = new ArrayList<Integer>(randomSet);
+    answer = new ArrayList<>(randomSet);
   }
 
-
+  public ArrayList<Integer> getAnswer() {
+    return answer;
+  }
 }
