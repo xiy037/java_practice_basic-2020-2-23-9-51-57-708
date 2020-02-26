@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class GameResult implements printResult {
   private Player player;
-  private GuessTarget target;
+  private GuessGame target;
   public ArrayList<Integer> countA;
   public ArrayList<Integer> countB;
 
-  public GameResult(GuessTarget t, Player p) throws WrongInputException {
+  public GameResult(GuessGame t, Player p) throws WrongInputException {
     target = t;
     player = p;
     player.checkGuessAgainstAnswer(target);

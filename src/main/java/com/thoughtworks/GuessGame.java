@@ -7,15 +7,18 @@ import java.util.stream.Collectors;
 /**
  * Guess will get or produce 4
  */
-public class GuessTarget {
+public class GuessGame {
   private ArrayList<Integer> answer = new ArrayList<>();
   private final int ANSWER_LENGTH = 4;
 
-  public GuessTarget(String path) {
-    try (Scanner scanner = new Scanner(new File(path))) {
+  public GuessGame(String path) {
+    try (Scanner scanner = new Scanner(new File(path)).useDelimiter("")) {
       while(scanner.hasNextInt()) {
         answer.add(scanner.nextInt());
       }
+//      for (Integer integer : answer) {
+//        System.out.println(integer);
+//      }
       if(!isCorrectFormat()) {
         getRandomAnswer();
       }
@@ -27,13 +30,6 @@ public class GuessTarget {
   }
 
   private boolean isCorrectFormat() {
-    String one = Integer.toString(answer.get(0));
-    String[] splited = one.split("");
-    ArrayList<Integer> splitedIntList = new ArrayList<>();
-    for (String s : splited) {
-      splitedIntList.add(Integer.parseInt(s));
-    }
-    answer = splitedIntList;
     Set<Integer> checkSet = new HashSet<>(answer);
     return checkSet.size() == ANSWER_LENGTH;
   }

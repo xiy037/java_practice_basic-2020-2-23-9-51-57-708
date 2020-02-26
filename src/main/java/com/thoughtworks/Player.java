@@ -32,7 +32,7 @@ public class Player {
   }
 
   //只有全对的时候返回true，其它时候都是false；
-  public void checkGuessAgainstAnswer(GuessTarget game) throws WrongInputException {
+  public void checkGuessAgainstAnswer(GuessGame game) throws WrongInputException {
     win = true;
     ArrayList<Integer> target = game.getAnswer();
     answerLength = target.size();
