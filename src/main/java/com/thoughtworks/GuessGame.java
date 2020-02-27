@@ -13,12 +13,17 @@ public class GuessGame {
 
   public GuessGame(String path) {
     try (Scanner scanner = new Scanner(new File(path)).useDelimiter("")) {
-      while(scanner.hasNextInt()) {
-        answer.add(scanner.nextInt());
+      while(scanner.hasNext()) {
+        //只读int，其它不读跳过；
+        try {
+          int num = scanner.nextInt();
+//          System.out.println(num);
+          answer.add(num);
+        } catch (Exception e) {
+//          System.out.println("Not int, skip!");
+          scanner.skip("\\D");
+        }
       }
-//      for (Integer integer : answer) {
-//        System.out.println(integer);
-//      }
       if(!isCorrectFormat()) {
         getRandomAnswer();
       }
